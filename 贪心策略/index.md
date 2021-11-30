@@ -2,11 +2,11 @@
 
 可以理解给样本设定一个简单的标准，并给样本分出优先级
 
-### 问题：
+## 问题
 
 给定多个字符，如 "adf"、"dfas"、"joi"等多个字符拼接成一个的字符串。使得拼接后的字符串字典序最小
 
-### 解：
+### 解
 
 需要字典序最小 ，那么字符串片段 字典序小的 需要放在结果字符串的前面。
 
@@ -26,48 +26,45 @@ a-c <= c-a
 
 #### 证明上面的正确性
 
-如果把字符理解为K进制的数（类似16进制中的ABCD）。当发生字符串拼接时，可以理解为字符串向左移动n位，然后加上新的字符串。
-
+如果把字符理解为K进制的数（类似16进制中的ABCD）。当发生字符串拼接时，可以理解为字符串向左移动n位，然后加上新的字符串。  
 例如，"ab" 拼接"cd"  `abcd=ab*K^2+cd`其中K为进制大小 2为“cd”的长度。（类似”12“拼接"34" :  1234=12*10^2+34）
 
 - 列出字符拼接的表达式
 
 $$
-\begin{cases} ab \leq ba \\\\ bc\leq cb\\  \end{cases} 
+\begin{cases} ab \leq ba \\\\ bc\leq cb\\  \end{cases}
 \Longrightarrow
 \begin{cases} a*k^b+b \leq b*k^a +a \\\\b*k^c+c \leq c*k^b +b \end{cases}
 \tag{1}
 $$
-
 $$
 \begin{cases} \\ ac\leq ca  \Longrightarrow  a*k^c+c \leq c*k^a+a \\\\ \end{cases}
 \tag{2}
 $$
 
-- 公式1中， 
-
-$$
-\begin{cases} ab \leq ba （同减b，乘c）\\\\ bc\leq cb（同减c，乘a）\\  \end{cases} 
-\Longrightarrow
-\begin{cases} ac*k^b \leq bc*k^a +ac -bc \\\\ ab*k^c \leq ac*k^b +ba-ac \end{cases}
-\tag{1.1}
-$$
+- 公式1中
+  $$
+  \begin{cases} ab \leq ba （同减b，乘c）\\\\ bc\leq cb（同减c，乘a）\\  \end{cases}
+  \Longrightarrow
+  \begin{cases} ac*k^b \leq bc*k^a +ac -bc \\\\ ab*k^c \leq ac*k^b +ba-ac \end{cases}
+  \tag{1.1}
+  $$
 
 - 公式2，等式两边同减c，乘b
   $$
   ac\leq ca （同减c，乘b）  \Longrightarrow  
-  ab*k^c\leq cb*k^a+ab -bc 
-  
+  ab*k^c\leq cb*k^a+ab -bc
   \tag{2.1}
   $$
 
 - 结合 公式1.1  第一行带入第二行 可以得出 公式2.1的结果。
 
-所以证明字符比较具有传递性
+所以证明前面的字符比较方式具有传递性，使用上面的策略进行排序，得到根据字典序大小排列的字符片段。拼接得到最小的字典序字符串。
 
 ---
 
 ### 解法步骤
 
-1. 
+1. 排序（排序策略如上）
 
+2. 拼接
