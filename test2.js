@@ -34,12 +34,39 @@ function heapsort(arr) {
     for (let i = 0; i < arrLen; i++) {
         heapinsert(arr, i);
     }
-    for (let i = arrLen - 1; i >= 0; i--) {
-        [arr[0], arr[i]] = [arr[i], arr[0]];
-        heapify(arr, 0, i);
+}
+//合并两个最小节点，成为一个新节点，并返回合并代价（两子节点的和）
+function merge2node(arr){
+    if(arr.length<=2) {
+      const cost=  arr.reduce((pre,cur)=>pre+cur)
+        arr.length=0  
+      return  cost
     }
+    //取出第一个数
+    let len =arr.length;
+    const A=arr[0];
+    [arr[0],arr[len-1]]=[arr[len-1],arr[0]];
+    heapify(arr,0,len-1);
+
+    const B=arr[0];
+    [arr[0],arr[len-2]]=[arr[len-2],arr[0]];
+    heapify(arr,0,len-2);
+
+    const newNode=A+B;
+    arr[len-2]=newNode;
+    arr.length=len-1;
+    heapinsert(arr,len-2);
+
+    return newNode;
 }
 
-const arrs1 = [9, 2, 4, 5, 1, 7, 3, 6, 0, 8];
+const arrs1 = [30, 10, 80,  60, 50];
 heapsort(arrs1);
-console.log(arrs1);
+
+let cost=0
+while(arrs1.length){
+    cost+=merge2node(arrs1)
+}
+
+
+console.log(cost);
