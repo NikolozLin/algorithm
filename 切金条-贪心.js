@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-bitwise */
-// 问题：
+// 问题： 给段金条，切出给定多节长度（总长刚好相等），切一刀代价消耗等长的铜板。求：最少的铜板是多少 
 
 // 插入堆，和父比较（小根堆）
 function heapinsert(arr, index) {
