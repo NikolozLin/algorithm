@@ -1,6 +1,6 @@
 
-class GEdge{
-    
+ export class GEdge{
+
     public weight:number //权值
     public from :GNode
     public to :GNode
@@ -11,7 +11,7 @@ class GEdge{
         this.to = to
     }
 }
-class GNode{
+export class GNode{
    
     public value:string // 图具体内容
     public in:number    //图节点的 入度
@@ -28,7 +28,7 @@ class GNode{
     }
 
 }
-class Graph{
+export class Graph{
     
     // 点集合 <点编号:sting|number,点实例>
     public nodes
