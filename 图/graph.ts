@@ -1,11 +1,15 @@
 
 class GEdge{
+    
+    public weight:number //权值
+    public from :GNode
+    public to :GNode
    
-    constructor(
-        public weight:number, //权值
-        public from :GNode,
-        public to :GNode
-    ){}
+    constructor(weight:number, from :GNode,to :GNode){
+        this.weight = weight, //权值
+        this.from = from,
+        this.to = to
+    }
 }
 class GNode{
    
