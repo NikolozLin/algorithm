@@ -31,9 +31,9 @@ export class GNode{
 export class Graph{
     
     // 点集合 <点编号:sting|number,点实例>
-    public nodes
+    public nodes :Map<string,GNode>
     // 边集合
-    public edges
+    public edges :Set<GEdge>
 
     constructor(){
         this.nodes = new Map()
