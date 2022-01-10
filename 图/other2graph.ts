@@ -14,8 +14,8 @@ export default function convert2graph(martix:Array<[string,string,number]>):Grap
         if(!graph.nodes.has(to)){
             graph.nodes.set(to,new GNode(to))
         }
-        const fromNode:GNode=graph.nodes.get(from)
-        const toNode:GNode=graph.nodes.get(to)
+        const fromNode:GNode=graph.nodes.get(from) as GNode
+        const toNode:GNode=graph.nodes.get(to) as GNode
         fromNode.nexts.push(toNode)
         fromNode.out+=1
         toNode.in+=1
