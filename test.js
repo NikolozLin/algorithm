@@ -1,53 +1,71 @@
-// 堆排序 (数组表示堆)
-// - 建立堆
-// 出堆
-
-function heapsort(arr) {
-    if (arr.length < 2) {
-        return;
-    }
-    const arrLen = arr.length;
-    for (let i = 0; i < arrLen; i++) {
-        heapinsert(arr, i);
-    }
-    for (let i = arrLen - 1; i >= 0; i--) {
-        [arr[0], arr[i]] = [arr[i], arr[0]];
-        heapify(arr, 0, i);
+// https://www.geeksforgeeks.org/count-pairs-having-bitwise-xor-less-than-k-from-given-array/
+class TrieNode {
+    child = []
+    cnt
+    constructor() {
+        this.child[0] = this.child[1] = null;
+        this.cnt = 0;
     }
 }
 
-/**
- * 插入堆
- * @param {*} arr  堆的数组
- * @param {*} index  插入堆的数据
- */
-function heapinsert(arr, index) {
-    while (arr[index] > arr[(index - 1) >> 1]) {
-        [arr[index], arr[(index - 1) >> 1]] = [arr[(index - 1) >> 1], arr[index]];
-        index = (index - 1) >> 1;
-    }
-}
-/**
- *修改某节点后， 子树重新调整为大根堆
- * @param {*} arr 堆的数组
- * @param {*} index 修改的数的需要
- * @param {*} heapSize 堆大小
- */
-function heapify(arr, index, heapSize) {
-    let left = index * 2 + 1;
+// insert a number into Trie
+function insertTrie(root, N) {
 
-    while (left < heapSize) {
-        let larget = left + 1 < heapSize && arr[left + 1] > arr[left] ? left + 1 : left;
-        larget = arr[larget] > arr[index] ? larget : index;
-        if (larget === index) {
-            break;
+    for (let i = 32; i >= 0; i--) {
+        let x = (N) & (i << i)
+
+        if (x < 2 && root.child[x] == null) {
+            root.child[x] = new TrieNode()
         }
-        [arr[index], arr[larget]] = [arr[larget], arr[index]];
-        index = larget;
-        left = index * 2 + 1;
+
+        if (x < 2) {
+            root.child[x].cnt += 1
+            root = root.child[x]
+        }
+
     }
 }
 
-const arrs = [9, 2, 4, 5, 1, 7, 3, 6, 0, 8];
-heapsort(arrs);
-console.log(arrs);
+function cntSmaller(root, N, K) {
+
+    let cntPairs = 0
+
+    for (let i = 32; i >= 0 && root != null; i--) {
+
+        let x = (N) & (i << i)
+
+        let y = (K) & (i << i)
+
+        if (y == 1) {
+            if (root.child[x] != null) {
+                cntPairs += root.child.cnt
+            }
+            root = root.child[1 - x]
+        } else {
+            if (x <= 2) root = root.child[x]
+        }
+
+    }
+    return cntPairs
+
+}
+
+function cntSmallerPairs(arr, N, K) {
+
+    const root = new TrieNode()
+
+    let cntPairs = 0
+    for (let i = 0; i < N; i++) {
+        cntPairs += cntSmaller(root,arr[i], K);
+
+        // Insert arr[i] into Trie
+        insertTrie(root, arr[i]);
+    }
+    return cntPairs;
+}
+
+
+let arr = [3, 5, 6, 8];
+let K = 7;
+let N = arr.length;
+console.log(cntSmallerPairs(arr, N, K))
