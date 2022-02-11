@@ -26,12 +26,28 @@ export default class PriorityQueue<T>{
     private strategey :QueueStrategy<T>;
 
     constructor(options:Options<T>){
-        this._length=options?.initialValues?.length ?? 0
-        this.strategey = new BinaryHeapStrategy() 
+
+        this._length=options?.initialValues?.length ?? 0;
+        this.strategey = new BinaryHeapStrategy(options);
         
     }
-    queue(value:T):void;
-    queue():T;
-    peek():T;
-    clear():void;
+    queue(value:T):void{
+        this._length++;
+        this.strategey.queue(value);
+    }
+    dequeue():T{
+        if(!this._length) throw new Error('Empty queue');
+        this._length--;
+        return  this.strategey.dequeue();
+    }
+
+    peek():T{
+        if(!this._length) throw new Error('Empty queue');
+        return this.strategey.peek();
+    }
+
+    clear():void{
+        this._length=0;
+        this.strategey.clear()
+    }
 }

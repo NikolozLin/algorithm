@@ -1,15 +1,16 @@
 export declare type Comparator<T>=(a:T,b:T)=> number
 
-export interface Option<T>{
+export interface Options<T>{
     comparator:Comparator<T>;
     initialValues?:T[];
 
 }
-export interface QueueStrategey<T>{
+// 可以根据不同堆类型 定义不同策略。如 BinaryHeap 、 B Heap 等
+export interface QueueStrategy<T>{
     queue(value:T):void;
-    queue():T;
+    dequeue():T;
     peek():T;
-    clear():void;v
+    clear():void;
 }
 
 export default class PriorityQueue<T>{
@@ -18,9 +19,9 @@ export default class PriorityQueue<T>{
     readonly length:number;
     private strategey;
 
-    constructor(option:Option);
+    constructor(option:Options<T>);
     queue(value:T):void;
-    queue():T;
+    dequeue():T;
     peek():T;
     clear():void;
 }
