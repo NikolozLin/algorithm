@@ -19,6 +19,7 @@ export default class BinaryHeapStrategy<T> implements QueueStrategy<T>{
 
 
     // 整体调整堆
+    
     private _heapify() {
         if (this.data.length > 0) {
             for (let i = 0; i < this.data.length; i++) {
@@ -28,8 +29,7 @@ export default class BinaryHeapStrategy<T> implements QueueStrategy<T>{
 
     }
 
-
-    //
+    //当前位置 向上调整堆
     private _bubbleUp(pos: number) {
         while (pos > 0) {
             const parent = (pos - 1) >>> 1;

@@ -1,5 +1,5 @@
 import other2graph  from "./other2graph";
-import { BFS,DFS } from "./BFS&DFS";
+import { BFS,DFS } from "./1 BFS&DFS";
 import { GNode } from "./graph";
 
 const testData:Array<[string,string,number]>=[
