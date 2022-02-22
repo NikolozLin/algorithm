@@ -54,30 +54,53 @@ function preOrder(head: TreeNode) {
     const stack: TreeNode[] = []
     stack.push(head)
     while (!stack.length) {
-        const current = stack.pop() as TreeNode
+        const head = stack.pop() as TreeNode
         console.log('do something!');
-        if (current.right != null) {
-            stack.push(current.right as TreeNode)
+        if (head.right != null) {
+            stack.push(head.right as TreeNode)
         }
-        if (current.left != null) {
-            stack.push(current.left as TreeNode)
+        if (head.left != null) {
+            stack.push(head.left as TreeNode)
         }
     }
 }
-function inOrder(head: TreeNode) {
+//1.遇到左树就入栈
+// 2.没有左树就打印
+// 3.有右树重复过程，
+// 进栈时：头左过程，出栈时左头的顺序，所以整个树给完美非分隔
+function inOrder(head: TreeNode|null) {
     if (!head) return
     const stack: TreeNode[] = []
-    stack.push(head)
     while (!stack.length) {
-
+        if(head!=null){
+            stack.push(head);
+            head=head.left 
+        }else{
+            head=stack.pop()  as TreeNode;
+            console.log('do something');
+            head=head.right
+        }
+    
     }
 
 }
 function postOrder(head: TreeNode) {
-  if (!head) return
+    if (!head) return
     const stack: TreeNode[] = []
     stack.push(head)
-    while (!stack.length) {
 
+    const result: TreeNode[] = []
+    while (!stack.length) {
+        const head = stack.pop() as TreeNode
+
+        result.push(head)
+        if (head.left != null) {
+            stack.push(head.left as TreeNode)
+        }
+        if (head.right != null) {
+            stack.push(head.right as TreeNode)
+        }
     }
+
+    result.reverse().forEach(node => console.log(node))
 }
