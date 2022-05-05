@@ -6,7 +6,7 @@ class Element<T> {
 }
 // 使用当前并查集需要 一开始将全部元素添加哦到集合中
 export class DisjointSet<T> {
-
+ 
     public elementMap: Map<T, Element<T>>
     //记录节点的父节点
     public fatherMap: Map<Element<T>, Element<T>>
