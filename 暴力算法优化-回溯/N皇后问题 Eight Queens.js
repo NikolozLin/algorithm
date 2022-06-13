@@ -3,7 +3,7 @@ function NQueens(n){
 
     //存储第N行 什么位置已经放置了棋子
     const record=[] 
-    process(0,record,n)
+    return process(0,record,n)
 }
 /**
  * 
@@ -12,7 +12,7 @@ function NQueens(n){
  * @param {*} n    问题规模
  */
 function process(index,record,n){
-    if(index==n)return 1
+    if(index==n) return 1
 
     let res = 0
     //遍历行
@@ -48,4 +48,4 @@ function isValid(record,index,j){
         return true
     }
 
-NQueens(8)
+console.log(NQueens(4))

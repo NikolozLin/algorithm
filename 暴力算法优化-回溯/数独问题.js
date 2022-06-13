@@ -29,7 +29,9 @@ class SudokuAllDone {
     //当前数据状况下，xy坐标
     dfs(border, x, y) {
         if (y == 9) return this.dfs(border, x + 1, 0); // 9jin
-        if (x == 9) return true;
+        if (x == 9) {
+                console.table(border)
+            return true}
         if (border[x][y] !== '.') return this.dfs(border, x, y + 1);
 
         for (let i = 0; i < 9; i++) {
@@ -52,3 +54,20 @@ class SudokuAllDone {
         return border[x][y] != '.';
     }
 }
+
+
+const aaa = new SudokuAllDone()
+
+const board = [
+    ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+    ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+    [".", "9", "8", ".", ".", ".", ".", "6", "."],
+    ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+    ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+    ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+    [".", "6", ".", ".", ".", ".", "2", "8", "."],
+    [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+    [".", ".", ".", ".", "8", ".", ".", "7", "9"]
+]
+
+aaa.addSudoku(board)

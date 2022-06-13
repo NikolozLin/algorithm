@@ -1,40 +1,76 @@
-/** candidates种选取任意可重复的数，组成一个和为target 的组合 。输出这些组合
- * @param {number[]} candidates 无重复数 数组
- * @param {number} target 目标整数
- * @return {number[][]}
- */
- const combinationSum2 = function(candidates, target) {
+class SudokuAllDone {
 
-    const len=candidates.length;
-    candidates.sort((a,b)=>a-b)
-    const path=[];
-    const result=[];
-    
-    backTracking(0,0);
-
-    return result;
-
-    function backTracking(sum,start){
-        if(sum>target)return;
-        if(sum==target){
-            result.push([...path]);
-            return;
-        } 
-
-        for(let i=start;i<len;i++){
-            const num = candidates[i]
-            if(i>start&&candidates[i]==candidates[i-1])continue
-            path.push(num);
-            backTracking(sum+num,i+1);
-            path.pop();
-        }
-
+    constructor() {
+        // 创建行 列 快的 记录
+        // 为了使查询跟快 采用多维数组方式记录是否写入这个数
+        // 9x9
+        this.row = new Array(9).fill(0).map(_ => new Array(9))
+        //9x9
+        this.col = new Array(9).fill(0).map(_ => new Array(9))
+        // 3x3x9
+        this.block = new Array(3).fill(0).map(_ => new Array(3).fill(0).map(_=> new Array(9)))
     }
 
-};
 
-const candidates = [10,1,2,7,6,1,5];
-const target = 8;
+    /**
+     * 
+     * @param { Arary<Array<number>> } border 
+     */
+    addSudoku(border) {
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                if (border[i][j] !== '.') {
+                    const v = border[i][j] - 1
+                    this.row[i][v] = this.col[j][v] = this.block[Math.floor(i / 3)][Math.floor(j / 3)][v] = true
+                }
+            }
 
-console.log(combinationSum2(candidates,target));
+        }
+        this.dfs(border, 0, 0)
+    }
 
+    //当前数据状况下，xy坐标
+    dfs(border, x, y) {
+        if (y == 9) return this.dfs(border, x + 1, 0); // 9jin
+        if (x == 9) {
+                console.table(border)
+            return true}
+        if (border[x][y] !== '.') return this.dfs(border, x, y + 1);
+
+        for (let i = 0; i < 9; i++) {
+            // 同行、同列 、同快 合法校验 b不存在填入的数
+            if (!this.row[x][i] && !this.col[y][i] && !this.block[Math.floor(x / 3)][Math.floor(y / 3)][i]) {
+
+                border[x][y] = i + 1;
+                this.row[x][i] = this.col[y][i] = this.block[Math.floor(x / 3)][Math.floor(y / 3)][i] = true
+
+                if (this.dfs(border, x, y + 1)) {
+                    break;
+                } else {
+                    //复原
+                    border[x][y] = '.';
+                    this.row[x][i] = this.col[y][i] = this.block[Math.floor(x / 3)][Math.floor(y / 3)][i] = false;
+                }
+
+            }
+        }
+        return border[x][y] != '.';
+    }
+}
+
+
+const aaa = new SudokuAllDone()
+
+const board = [
+    ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+    ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+    [".", "9", "8", ".", ".", ".", ".", "6", "."],
+    ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+    ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+    ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+    [".", "6", ".", ".", ".", ".", "2", "8", "."],
+    [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+    [".", ".", ".", ".", "8", ".", ".", "7", "9"]
+]
+
+aaa.addSudoku(board)
