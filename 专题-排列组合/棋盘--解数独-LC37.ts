@@ -26,7 +26,7 @@
     function dfs(i, j) {
         if (j == 9) return dfs(i + 1, 0);
         if (i == 9) {
-                console.table(board)
+                // console.table(board)
             return board;}
 
         if(board[i][j]!=='.') return dfs(i,j+1);
