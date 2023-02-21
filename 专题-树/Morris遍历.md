@@ -13,8 +13,8 @@
 1. 如果cur没有左孩子，cur向右移动（cur=cur.right）
 
 2. 如果 `cur` 有左孩子， 在左子树上的最右的节点 `mostRight`：
-    - 如果`mostRight`的右指针指向null,让其指向cur，然后cur向*左*移动（cur=cur.left）
-    - 如果`mostRight`的右指针指向cur,让其指向null，然后cur向*右*移动（cur=cur.right）
+    - 如果`mostRight`的右指针指向null,让其指向cur，然后cur向 左 移动（cur=cur.left）
+    - 如果`mostRight`的右指针指向cur,让其指向null，然后cur向 右 移动（cur=cur.right）
 
 3. cur为空时遍历结束
 

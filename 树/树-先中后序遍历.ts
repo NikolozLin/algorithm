@@ -71,7 +71,8 @@ function preOrder(head: TreeNode) {
 function inOrder(head: TreeNode|null) {
     if (!head) return
     const stack: TreeNode[] = []
-    while (!stack.length) {
+    
+    while (!stack.length||head!=null) {
         if(head!=null){
             stack.push(head);
             head=head.left 

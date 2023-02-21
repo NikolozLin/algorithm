@@ -1,7 +1,3 @@
-
-
-
-
 import { QueueStrategy, Options, Comparator } from './priority-queue';
 
 export default class BinaryHeapStrategy<T> implements QueueStrategy<T>{
@@ -73,7 +69,7 @@ export default class BinaryHeapStrategy<T> implements QueueStrategy<T>{
     }
 
     dequeue(): T{
-        [this.data[0],this.data[this.data.length-1]]= [this.data[this.data.length-1],this.data[0]];
+        [this.data[0],this.data[this.data.length-1]] = [this.data[this.data.length-1],this.data[0]];
         const value =this.data.pop() as T
         this._bubbleDown(0)
         return value

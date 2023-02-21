@@ -48,6 +48,7 @@ function morrisPre(head: TreeNode | null) {
 
             if (mostRight.right == null) {
                 console.log(' 先序：有子树第一次来到 打印');
+                console.log(cur.value)
 
                 mostRight.right = cur
                 cur = cur.left as TreeNode
@@ -57,8 +58,8 @@ function morrisPre(head: TreeNode | null) {
                 mostRight.right = null
             }
         } else {
-            console.log(
-                '没有左树直接打印');
+            console.log('没有左树直接打印');
+            console.log(cur.value)
         }
         cur = cur.right as TreeNode
     }
@@ -77,7 +78,7 @@ function morrisMid(head: TreeNode | null) {
             }
 
             if (mostRight.right == null) {
-                console.log(' 先序：有子树第一次来到 打印');
+                // console.log(' 先序：有子树第一次来到 打印');
 
                 mostRight.right = cur
                 cur = cur.left as TreeNode
@@ -87,14 +88,16 @@ function morrisMid(head: TreeNode | null) {
                 mostRight.right = null
             }
         }
-
         console.log('中序：没有左树直接打印');
+        console.log('中序：第二次来到同个节点，没有continue 直接打印');
 
         cur = cur.right as TreeNode
     }
 }
 
 // --------------------------------后序遍历------------------------
+//1. 第二次来到同个节点，逆序打印左树右边界
+//2。全部遍历完后 逆序打印整个树的 右边界
 function morrisPost(head: TreeNode | null) {
     if (head == null) return;
 

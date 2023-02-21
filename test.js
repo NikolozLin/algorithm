@@ -1,37 +1,47 @@
 /**
- * @param {number} n
- * @return {string[]}
+ * @param {string} expression
+ * @return {string}
  */
-var generateParenthesis = function (n) {
-    if (!n) return [];
-    if (n == 1) return ['()'];
-    const result = [];
-    const path = ['('];//记录在那几个左括号插入右括号
-    let leftCount = 1;
-    let rightCount = 0;
-    backTracking(1)
-    return result
+var fractionAddition = function (expression) {
+    const reg = new RegExp(/[+-]?\d+\/\d+/g)
 
-    function backTracking(index) {
+    const numArr = expression.match(reg)
+    let result = numArr.reduce((a, b) => {
+        const [, aSymbol, aT, aB] = a.replace(/^([+])?(\d+)/g, '+$2').match(/([+-]?)(\d+)\/(\d+)/)
+        const [, bSymbol, bT, bB] = b.replace(/^([+])?(\d+)/g, '+$2').match(/([+-]?)(\d+)\/(\d+)/)
+        if (aSymbol == bSymbol) {
+            return `${aSymbol}${aT * bB + bT * aB}/${aB * bB}`
+        } else {
+            const aTbB = aT * bB;
+            const bTaB = bT * aB;
+            if (aTbB > bTaB) {
+                return `${aSymbol}${aT * bB - bT * aB}/${aB * bB}`
+            } else if (aTbB < bTaB) {
+                return `${bSymbol}${bT * aB - aT * bB}/${aB * bB}`
+            } else {
+                return '0/1'
+            }
+        }
+    })
+    console.log(result)
 
-        if (index == 2*n) {
-            return result.push(path.join(''))
-        }
-        if (leftCount -rightCount> 0&&rightCount<n) {
-            path.push(')')
-            rightCount++;
-            backTracking(index + 1)
-            rightCount--;
-            path.pop()
-        }
-        if(leftCount<n){
-            path.push('(')
-            leftCount++;
-            backTracking(index + 1)
-            leftCount--;
-            path.pop()
-        }
+    const [, rSymbol, rT, rB] = result.replace(/^([+])?(\d+)/g, '+$2').match(/([+-]?)(\d+)\/(\d+)/)
+    if (rT == 0) return '0/1'
+    // GCD
+    let a = rT
+    let b = rB
+    if (a-b < 0) {
+     [a, b] = [b, a];
     }
+    let r = a%b
+    while (r != 0) {
+            a = b;
+            b = r
+            r = a % b
+    }
+                    
+    if (rSymbol == '+') return `${rT/b}/${rB/b}`;
+    if (rSymbol == '-') return `${rSymbol}${rT/b}/${rB/b}`;
 };
 
-console.log(generateParenthesis(3));
+console.log(fractionAddition("5/3+1/3"))
